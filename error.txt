@@ -1,0 +1,43 @@
+(ipex) congxiao@test-SYS-741GE-TNRT:~/code/python/llama2/2-7b/vtune_llama/amx_version$ python example_text_completion.py 
+/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/__init__.py:955: UserWarning: torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at ../torch/csrc/tensor/python_tensor.cpp:432.)
+  _C._set_default_tensor_type(t)
+/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/generation.py:88: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(ckpt_path, map_location=device)
+Loaded in 38.21 seconds
+Generating tokens:   0%|                                                                                                                                                                           | 0/1 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/example_text_completion.py", line 62, in <module>
+    main(ckpt_dir=checkpoints_dir,
+  File "/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/example_text_completion.py", line 42, in main
+    results = model.text_completion(
+  File "/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/generation.py", line 285, in text_completion
+    generation_tokens, generation_logprobs = self.generate(
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/generation.py", line 207, in generate
+    logits = self.model.forward(tokens[:, prev_pos:cur_pos], prev_pos)
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/model.py", line 467, in forward
+    h = layer(h, start_pos, freqs_cis, mask)
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/model.py", line 382, in forward
+    h = x + self.attention(
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/congxiao/code/python/llama2/2-7b/vtune_llama/amx_version/model.py", line 247, in forward
+    xq= self.wq(x)
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/intel_extension_for_pytorch/nn/utils/_weight_prepack.py", line 271, in forward
+    output = torch.ops.torch_ipex.ipex_linear(
+  File "/home/congxiao/.conda/envs/ipex/lib/python3.9/site-packages/torch/_ops.py", line 1061, in __call__
+    return self_._op(*args, **(kwargs or {}))
+RuntimeError: could not create a primitive descriptor for an inner product forward propagation primitive
